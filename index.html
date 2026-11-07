@@ -436,6 +436,31 @@
   <footer id="about">
     THE WISHING HAUL Co. © 2026 · THE ART OF WANTING
   </footer>
+<script>
+  const categoryButtons = document.querySelectorAll('.category');
+  const products = document.querySelectorAll('.product');
 
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selectedCategory = button.dataset.category;
+
+      categoryButtons.forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      button.classList.add('active');
+
+      products.forEach(product => {
+        const productCategory = product.dataset.category;
+
+        if (selectedCategory === 'all' || selectedCategory === productCategory) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
