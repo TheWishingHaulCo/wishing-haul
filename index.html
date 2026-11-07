@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>WISHING HAUL — Shop everything. Spend nothing.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #FAF8F3;
+      color: #302720;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    header {
+      padding: 25px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #E5D9CB;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      letter-spacing: 2px;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: #302720;
+      text-decoration: none;
+      font-size: 13px;
+      margin-left: 25px;
+    }
+
+    .hero {
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .eyebrow {
+      color: #72566B;
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(55px, 10vw, 110px);
+      font-weight: 400;
+      line-height: 0.95;
+      margin-bottom: 25px;
+    }
+
+    .subtitle {
+      color: #72566B;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 25px;
+      font-style: italic;
+      margin-bottom: 18px;
+    }
+
+    .description {
+      max-width: 420px;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #766E66;
+      margin-bottom: 35px;
+    }
+
+    .button {
+      display: inline-block;
+      background: #72566B;
+      color: white;
+      padding: 16px 35px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background: #302720;
+    }
+
+    .note {
+      margin-top: 20px;
+      font-size: 10px;
+      color: #998D82;
+      letter-spacing: 1px;
+    }
+
+    footer {
+      border-top: 1px solid #E5D9CB;
+      padding: 25px;
+      text-align: center;
+      font-size: 10px;
+      color: #998D82;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 20px;
+      }
+
+      .logo {
+        font-size: 23px;
+      }
+
+      nav a {
+        margin-left: 10px;
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">WISHING HAUL</div>
+
+    <nav>
+      <a href="#home">HOME</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+
+      <p class="eyebrow">THE ART OF WANTING</p>
+
+      <h1>Shop your<br>little fantasies.</h1>
+
+      <p class="subtitle">Shop everything. Spend nothing.</p>
+
+      <p class="description">
+        Discover the things you love, build your dream cart
+        and enjoy the thrill of shopping without spending
+        a single penny.
+      </p>
+
+      <a href="#about" class="button">
+        START WISHING →
+      </a>
+
+      <p class="note">
+        NO REAL PURCHASES. JUST A LITTLE FANTASY.
+      </p>
+
+    </section>
+  </main>
+
+  <footer id="about">
+    WISHING HAUL © 2026 · THE ART OF WANTING
+  </footer>
+
+</body>
+</html>
