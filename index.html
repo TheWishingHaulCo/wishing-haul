@@ -453,6 +453,83 @@ header nav {
   font-weight: 600;
   color: #72566B;
 }
+
+/* MY DREAM CART PAGE */
+
+.wishlist-page {
+  max-width: 1100px;
+  margin: 100px auto;
+  padding: 80px 50px;
+  background: #FAF8F3;
+  border-top: 1px solid #E5D9CB;
+}
+
+.wishlist-header {
+  text-align: center;
+  margin-bottom: 65px;
+}
+
+.wishlist-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: #302720;
+  margin: 15px 0;
+}
+
+.wishlist-header > p:last-child {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #72566B;
+}
+
+.wishlist-empty {
+  text-align: center;
+  padding: 55px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #72566B;
+}
+
+.wishlist-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #C8B7A8;
+  padding-top: 25px;
+  margin-top: 40px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #302720;
+}
+
+#wishlist-total {
+  font-size: 17px;
+  font-weight: 600;
+  color: #72566B;
+}
+
+.share-button {
+  display: block;
+  margin: 40px auto 0;
+  padding: 16px 35px;
+  background: #72566B;
+  color: #FAF8F3;
+  border: 1px solid #72566B;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share-button:hover {
+  background: #302720;
+  border-color: #302720;
+}
 </style>
 </head>
 
@@ -465,6 +542,7 @@ header nav {
   <nav>
     <a href="#home">HOME</a>
     <a href="#about">ABOUT</a>
+    <a href="#dream-cart">MY DREAM CART</a>
 
     <div class="bag-wrapper">
       <button class="bag-button" aria-label="Open dream cart">
@@ -579,6 +657,28 @@ header nav {
 
 </section>
 
+
+<section id="dream-cart" class="wishlist-page">
+  <div class="wishlist-header">
+    <p class="product-tag">YOUR WISHES, COLLECTED</p>
+    <h2>MY DREAM CART</h2>
+    <p>A collection of things you love.</p>
+  </div>
+
+  <div id="wishlist-items">
+    <p class="wishlist-empty">Your dream cart is waiting for something lovely.</p>
+  </div>
+
+  <div class="wishlist-summary">
+    <span>YOUR DREAM TOTAL</span>
+    <span id="wishlist-total">$0.00</span>
+  </div>
+
+  <button id="share-wishlist" class="share-button">
+    SHARE MY DREAM CART
+  </button>
+</section>
+
   <footer id="about">
     THE WISHING HAUL Co. © 2026 · THE ART OF WANTING
   </footer>
@@ -616,6 +716,8 @@ header nav {
   const bagCount = document.getElementById('bag-count');
 const bagPreview = document.getElementById('bag-preview');
 const bagTotal = document.getElementById('bag-total');
+const wishlistItems = document.getElementById('wishlist-items');
+const wishlistTotal = document.getElementById('wishlist-total');
 
   cartButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -730,6 +832,60 @@ function renderCart() {
   }
 
   bagTotal.textContent = total.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
+renderWishlist();
+}
+
+  
+function renderWishlist() {
+  wishlistItems.innerHTML = '';
+
+  if (cart.length === 0) {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.className = 'wishlist-empty';
+    emptyMessage.textContent = 'Your dream cart is waiting for something lovely.';
+    wishlistItems.appendChild(emptyMessage);
+  } else {
+    cart.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'wishlist-item';
+
+      const info = document.createElement('div');
+
+      const brand = document.createElement('p');
+      brand.className = 'wishlist-item-brand';
+      brand.textContent = item.brand;
+
+      const name = document.createElement('h3');
+      name.className = 'wishlist-item-name';
+      name.textContent = item.name;
+
+      const quantity = document.createElement('p');
+      quantity.textContent = `Quantity: ${item.quantity}`;
+
+      const price = document.createElement('p');
+      price.className = 'wishlist-item-price';
+      price.textContent = (item.price * item.quantity).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+
+      info.appendChild(brand);
+      info.appendChild(name);
+      info.appendChild(quantity);
+
+      row.appendChild(info);
+      row.appendChild(price);
+
+      wishlistItems.appendChild(row);
+    });
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  wishlistTotal.textContent = total.toLocaleString('en-US', {
     style: 'currency',
     currency: 'USD'
   });
