@@ -488,6 +488,70 @@ display: none;
   color: #72566B;
 }
 
+.wishlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 25px 0;
+  border-bottom: 1px solid #E5D9CB;
+}
+
+.wishlist-item-brand {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #72566B;
+  margin-bottom: 8px;
+}
+
+.wishlist-item-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-weight: 500;
+  color: #302720;
+  margin: 0 0 8px;
+}
+
+.wishlist-item-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #72566B;
+  white-space: nowrap;
+}
+.wishlist-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.wishlist-controls button {
+  background: transparent;
+  border: 1px solid #C8B7A8;
+  color: #72566B;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 7px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.wishlist-controls button:hover {
+  background: #72566B;
+  color: #FAF8F3;
+  border-color: #72566B;
+}
+
+.wishlist-controls span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: #302720;
+}
+
 .wishlist-summary {
   display: flex;
   justify-content: space-between;
@@ -766,7 +830,7 @@ function renderWishlist() {
     emptyMessage.textContent = 'Your dream cart is waiting for something lovely.';
     wishlistItems.appendChild(emptyMessage);
   } else {
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
       const row = document.createElement('div');
       row.className = 'wishlist-item';
 
@@ -780,9 +844,6 @@ function renderWishlist() {
       name.className = 'wishlist-item-name';
       name.textContent = item.name;
 
-      const quantity = document.createElement('p');
-      quantity.textContent = `Quantity: ${item.quantity}`;
-
       const price = document.createElement('p');
       price.className = 'wishlist-item-price';
       price.textContent = (item.price * item.quantity).toLocaleString('en-US', {
@@ -790,9 +851,48 @@ function renderWishlist() {
         currency: 'USD'
       });
 
+      const controls = document.createElement('div');
+      controls.className = 'wishlist-controls';
+
+      const decrease = document.createElement('button');
+      decrease.textContent = '−';
+
+      decrease.addEventListener('click', () => {
+        if (item.quantity > 1) {
+          item.quantity--;
+        } else {
+          cart.splice(index, 1);
+        }
+        renderCart();
+      });
+
+      const quantity = document.createElement('span');
+      quantity.textContent = item.quantity;
+
+      const increase = document.createElement('button');
+      increase.textContent = '+';
+
+      increase.addEventListener('click', () => {
+        item.quantity++;
+        renderCart();
+      });
+
+      const remove = document.createElement('button');
+      remove.textContent = 'REMOVE';
+
+      remove.addEventListener('click', () => {
+        cart.splice(index, 1);
+        renderCart();
+      });
+
+      controls.appendChild(decrease);
+      controls.appendChild(quantity);
+      controls.appendChild(increase);
+      controls.appendChild(remove);
+
       info.appendChild(brand);
       info.appendChild(name);
-      info.appendChild(quantity);
+      info.appendChild(controls);
 
       row.appendChild(info);
       row.appendChild(price);
@@ -801,6 +901,13 @@ function renderWishlist() {
     });
   }
 
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  wishlistTotal.textContent = total.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
+}
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   wishlistTotal.textContent = total.toLocaleString('en-US', {
