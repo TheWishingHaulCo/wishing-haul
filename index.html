@@ -377,12 +377,6 @@ header nav {
   text-align: left;
 }
 
-.bag-wrapper:hover .bag-dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
 .bag-dropdown h3 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 28px;
@@ -456,7 +450,8 @@ header nav {
 
 /* MY DREAM CART PAGE */
 
-.wishlist-page {
+.wishlist-page {  
+display: none;
   max-width: 1100px;
   margin: 100px auto;
   padding: 80px 50px;
@@ -530,6 +525,23 @@ header nav {
   background: #302720;
   border-color: #302720;
 }
+.continue-button {
+  display: block;
+  margin: 40px auto 15px;
+  padding: 16px 35px;
+  background: transparent;
+  color: #72566B;
+  border: 1px solid #C8B7A8;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.continue-button:hover {
+  background: #E5D9CB;
+}
 </style>
 </head>
 
@@ -542,28 +554,14 @@ header nav {
   <nav>
     <a href="#home">HOME</a>
     <a href="#about">ABOUT</a>
-    <a href="#dream-cart">MY DREAM CART</a>
+ <a href="#" onclick="showDreamCart(); return false;">MY DREAM CART</a>
 
     <div class="bag-wrapper">
-      <button class="bag-button" aria-label="Open dream cart">
-        <span class="bag-icon">♧</span>
-        <span class="bag-count" id="bag-count">0</span>
-      </button>
-
-      <div class="bag-dropdown">
-        <p class="product-tag">YOUR WISHES, COLLECTED</p>
-        <h3>MY DREAM CART</h3>
-
-        <div id="bag-preview">
-          <p>Your dream cart is waiting for something lovely.</p>
-        </div>
-
-        <div class="bag-total">
-          <span>Dream total</span>
-          <span id="bag-total">$0.00</span>
-        </div>
-      </div>
-    </div>
+  <button class="bag-button" aria-label="Open dream cart" onclick="showDreamCart()">
+    <span class="bag-icon">♧</span>
+    <span class="bag-count" id="bag-count">0</span>
+  </button>
+</div>
   </nav>
 </header>
 
@@ -674,6 +672,9 @@ header nav {
     <span id="wishlist-total">$0.00</span>
   </div>
 
+<button class="continue-button" onclick="showCatalog()">
+  CONTINUE SHOPPING
+</button>
   <button id="share-wishlist" class="share-button">
     SHARE MY DREAM CART
   </button>
@@ -749,93 +750,10 @@ const wishlistTotal = document.getElementById('wishlist-total');
 
 function renderCart() {
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   bagCount.textContent = itemCount;
-  bagPreview.innerHTML = '';
 
-  if (cart.length === 0) {
-    bagPreview.textContent = 'Your dream cart is waiting for something lovely.';
-  } else {
-    cart.forEach((item, index) => {
-      const row = document.createElement('div');
-
-      row.style.display = 'flex';
-      row.style.flexDirection = 'column';
-      row.style.gap = '8px';
-      row.style.padding = '12px 0';
-      row.style.borderBottom = '1px solid #E5D9CB';
-
-      const productLine = document.createElement('div');
-      productLine.style.display = 'flex';
-      productLine.style.justifyContent = 'space-between';
-      productLine.style.gap = '10px';
-
-      const name = document.createElement('span');
-      name.textContent = item.name;
-      name.style.fontSize = '12px';
-
-      const price = document.createElement('span');
-      price.textContent = (item.price * item.quantity).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD'
-      });
-      price.style.fontSize = '12px';
-      price.style.whiteSpace = 'nowrap';
-
-      productLine.appendChild(name);
-      productLine.appendChild(price);
-
-      const controls = document.createElement('div');
-      controls.style.display = 'flex';
-      controls.style.alignItems = 'center';
-      controls.style.gap = '12px';
-
-      const decrease = document.createElement('button');
-      decrease.textContent = '−';
-      decrease.addEventListener('click', () => {
-        if (item.quantity > 1) {
-          item.quantity--;
-        } else {
-          cart.splice(index, 1);
-        }
-        renderCart();
-      });
-
-      const quantity = document.createElement('span');
-      quantity.textContent = item.quantity;
-
-      const increase = document.createElement('button');
-      increase.textContent = '+';
-      increase.addEventListener('click', () => {
-        item.quantity++;
-        renderCart();
-      });
-
-      const remove = document.createElement('button');
-      remove.textContent = '×';
-      remove.style.marginLeft = 'auto';
-      remove.addEventListener('click', () => {
-        cart.splice(index, 1);
-        renderCart();
-      });
-
-      controls.appendChild(decrease);
-      controls.appendChild(quantity);
-      controls.appendChild(increase);
-      controls.appendChild(remove);
-
-      row.appendChild(productLine);
-      row.appendChild(controls);
-      bagPreview.appendChild(row);
-    });
-  }
-
-  bagTotal.textContent = total.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  });
-renderWishlist();
+  renderWishlist();
 }
 
   
@@ -890,7 +808,19 @@ function renderWishlist() {
     currency: 'USD'
   });
 }
+// PAGE NAVIGATION
 
+function showDreamCart() {
+  document.querySelector('main').style.display = 'none';
+  document.querySelector('.discover').style.display = 'none';
+  document.querySelector('#dream-cart').style.display = 'block';
+}
+
+function showCatalog() {
+  document.querySelector('main').style.display = 'block';
+  document.querySelector('.discover').style.display = 'block';
+  document.querySelector('#dream-cart').style.display = 'none';
+}
 
 </script>
 
