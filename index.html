@@ -640,6 +640,9 @@ header nav {
   const cartItems = document.getElementById('cart-items');
   const cartEmpty = document.querySelector('.cart-empty');
   const cartTotal = document.getElementById('cart-total');
+  const bagCount = document.getElementById('bag-count');
+const bagPreview = document.getElementById('bag-preview');
+const bagTotal = document.getElementById('bag-total');
 
   cartButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -697,6 +700,43 @@ header nav {
       total += item.price * item.quantity;
     });
 
+      // UPDATE FLOATING BAG
+    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    bagCount.textContent = itemCount;
+    bagPreview.innerHTML = '';
+
+    if (cart.length === 0) {
+      bagPreview.textContent = 'Your dream cart is waiting for something lovely.';
+    } else {
+      cart.forEach(item => {
+        const row = document.createElement('div');
+
+        row.style.display = 'flex';
+        row.style.justifyContent = 'space-between';
+        row.style.gap = '12px';
+        row.style.padding = '8px 0';
+        row.style.fontSize = '12px';
+
+        const name = document.createElement('span');
+        name.textContent = item.name + ' × ' + item.quantity;
+
+        const price = document.createElement('span');
+        price.textContent = (item.price * item.quantity).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        });
+
+        row.appendChild(name);
+        row.appendChild(price);
+        bagPreview.appendChild(row);
+      });
+    }
+
+    bagTotal.textContent = total.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
     cartTotal.textContent = total.toLocaleString('en-US', {
       style: 'currency',
       currency: 'USD'
