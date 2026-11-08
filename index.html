@@ -828,12 +828,15 @@ const wishlistTotal = document.getElementById('wishlist-total');
       if (existingItem) {
         existingItem.quantity++;
       } else {
-        cart.push({
-          name: name,
-          brand: brand,
-          price: price,
-          quantity: 1
-        });
+      const image = product.querySelector('.product-image img')?.src || '';
+
+cart.push({
+  name: name,
+  brand: brand,
+  price: price,
+  image: image,
+  quantity: 1
+});
       }
 
       renderCart();
