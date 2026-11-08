@@ -908,13 +908,7 @@ function renderWishlist() {
     currency: 'USD'
   });
 }
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  wishlistTotal.textContent = total.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  });
-}
+  
 // PAGE NAVIGATION
 
 function showDreamCart() {
