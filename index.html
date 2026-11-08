@@ -918,7 +918,17 @@ function renderWishlist() {
     cart.forEach((item, index) => {
       const row = document.createElement('div');
       row.className = 'wishlist-item';
+      if (item.image) {
+        const image = document.createElement('img');
+        image.src = item.image;
+        image.alt = item.name;
+        image.style.width = '85px';
+        image.style.height = '100px';
+        image.style.objectFit = 'contain';
+        image.style.flexShrink = '0';
 
+        row.appendChild(image);
+      }
       const info = document.createElement('div');
 
       const brand = document.createElement('p');
