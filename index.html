@@ -485,7 +485,9 @@
   <footer id="about">
     THE WISHING HAUL Co. © 2026 · THE ART OF WANTING
   </footer>
+
 <script>
+  // CATEGORY FILTERS
   const categoryButtons = document.querySelectorAll('.category');
   const products = document.querySelectorAll('.product');
 
@@ -510,6 +512,76 @@
       });
     });
   });
+
+  // MY DREAM CART
+  const cart = [];
+  const cartButtons = document.querySelectorAll('.dream-button');
+  const cartItems = document.getElementById('cart-items');
+  const cartEmpty = document.querySelector('.cart-empty');
+  const cartTotal = document.getElementById('cart-total');
+
+  cartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const product = button.closest('.product');
+
+      const name = product.querySelector('h3').textContent;
+      const brand = product.querySelector('.brand').textContent;
+      const priceText = product.querySelector('p:not(.brand):not(.product-tag)').textContent;
+      const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+
+      const existingItem = cart.find(item => item.name === name);
+
+      if (existingItem) {
+        existingItem.quantity++;
+      } else {
+        cart.push({
+          name: name,
+          brand: brand,
+          price: price,
+          quantity: 1
+        });
+      }
+
+      renderCart();
+    });
+  });
+
+  function renderCart() {
+    cartItems.innerHTML = '';
+
+    cartEmpty.style.display = cart.length === 0 ? 'block' : 'none';
+
+    let total = 0;
+
+    cart.forEach(item => {
+      const row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.justifyContent = 'space-between';
+      row.style.padding = '12px 0';
+      row.style.borderBottom = '1px solid #C8B7A8';
+
+      const itemName = document.createElement('span');
+      itemName.textContent = `${item.brand} — ${item.name} × ${item.quantity}`;
+
+      const itemPrice = document.createElement('span');
+      itemPrice.textContent = (item.price * item.quantity).toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
+
+      row.appendChild(itemName);
+      row.appendChild(itemPrice);
+      cartItems.appendChild(row);
+
+      total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = total.toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+  }
 </script>
+
 </body>
 </html>
