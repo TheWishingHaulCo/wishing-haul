@@ -350,14 +350,37 @@
 
 <body>
 
-  <header>
-    <div class="logo">THE WISHING HAUL Co.</div>
 
-    <nav>
-      <a href="#home">HOME</a>
-      <a href="#about">ABOUT</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">THE WISHING HAUL Co.</div>
+
+  <nav>
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+
+    <div class="bag-wrapper">
+      <button class="bag-button" aria-label="Open dream cart">
+        <span class="bag-icon">♧</span>
+        <span class="bag-count" id="bag-count">0</span>
+      </button>
+
+      <div class="bag-dropdown">
+        <p class="product-tag">YOUR WISHES, COLLECTED</p>
+        <h3>MY DREAM CART</h3>
+
+        <div id="bag-preview">
+          <p>Your dream cart is waiting for something lovely.</p>
+        </div>
+
+        <div class="bag-total">
+          <span>Dream total</span>
+          <span id="bag-total">$0.00</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
 
   <main id="home">
     <section class="hero">
