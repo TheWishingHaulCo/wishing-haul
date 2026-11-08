@@ -858,20 +858,41 @@ function renderCart() {
     cart.forEach(item => {
       const row = document.createElement('div');
 
+      row.style.display = 'flex';
+      row.style.alignItems = 'center';
+      row.style.gap = '14px';
       row.style.padding = '12px 0';
       row.style.borderBottom = '1px solid #E5D9CB';
 
+      if (item.image) {
+        const image = document.createElement('img');
+        image.src = item.image;
+        image.alt = item.name;
+        image.style.width = '55px';
+        image.style.height = '65px';
+        image.style.objectFit = 'contain';
+        image.style.flexShrink = '0';
+
+        row.appendChild(image);
+      }
+
+      const info = document.createElement('div');
+
       const name = document.createElement('p');
       name.textContent = item.name;
+      name.style.margin = '0 0 6px';
 
       const price = document.createElement('p');
       price.textContent = (item.price * item.quantity).toLocaleString('en-US', {
         style: 'currency',
         currency: 'USD'
       });
+      price.style.margin = '0';
 
-      row.appendChild(name);
-      row.appendChild(price);
+      info.appendChild(name);
+      info.appendChild(price);
+      row.appendChild(info);
+
       bagPreview.appendChild(row);
     });
   }
@@ -880,6 +901,9 @@ function renderCart() {
     style: 'currency',
     currency: 'USD'
   });
+
+  renderWishlist();
+}
 
   renderWishlist();
 }
