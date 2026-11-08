@@ -608,16 +608,6 @@ header nav {
   </article>
 
 </div>
-<div class="dream-cart">
-  <p class="product-tag">YOUR WISHES, COLLECTED</p>
-  <h2>MY DREAM CART</h2>
-  <p class="cart-empty">Your dream cart is waiting for something lovely.</p>
-  <div id="cart-items"></div>
-  <div class="cart-total">
-    <span>Dream total</span>
-    <span id="cart-total">$0.00</span>
-  </div>
-</div>
 
 </section>
 
@@ -683,9 +673,6 @@ header nav {
   // MY DREAM CART
   const cart = [];
   const cartButtons = document.querySelectorAll('.dream-button');
-  const cartItems = document.getElementById('cart-items');
-  const cartEmpty = document.querySelector('.cart-empty');
-  const cartTotal = document.getElementById('cart-total');
   const bagCount = document.getElementById('bag-count');
 const bagPreview = document.getElementById('bag-preview');
 const bagTotal = document.getElementById('bag-total');
@@ -717,85 +704,10 @@ const bagTotal = document.getElementById('bag-total');
   });
 
 
+
 function renderCart() {
-  cartItems.innerHTML = '';
-
-  cartEmpty.style.display = cart.length === 0 ? 'block' : 'none';
-
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    const row = document.createElement('div');
-    row.style.display = 'flex';
-    row.style.justifyContent = 'space-between';
-    row.style.alignItems = 'center';
-    row.style.gap = '15px';
-    row.style.padding = '15px 0';
-    row.style.borderBottom = '1px solid #C8B7A8';
-
-    const itemInfo = document.createElement('div');
-
-    const itemName = document.createElement('p');
-    itemName.textContent = `${item.brand} — ${item.name}`;
-    itemName.style.margin = '0 0 8px';
-
-    const controls = document.createElement('div');
-    controls.style.display = 'flex';
-    controls.style.alignItems = 'center';
-    controls.style.gap = '12px';
-
-    const decrease = document.createElement('button');
-    decrease.textContent = '−';
-    decrease.addEventListener('click', () => {
-      if (item.quantity > 1) {
-        item.quantity--;
-      } else {
-        cart.splice(index, 1);
-      }
-      renderCart();
-    });
-
-    const quantity = document.createElement('span');
-    quantity.textContent = item.quantity;
-
-    const increase = document.createElement('button');
-    increase.textContent = '+';
-    increase.addEventListener('click', () => {
-      item.quantity++;
-      renderCart();
-    });
-
-    const remove = document.createElement('button');
-    remove.textContent = '×';
-    remove.addEventListener('click', () => {
-      cart.splice(index, 1);
-      renderCart();
-    });
-
-    controls.appendChild(decrease);
-    controls.appendChild(quantity);
-    controls.appendChild(increase);
-    controls.appendChild(remove);
-
-    itemInfo.appendChild(itemName);
-    itemInfo.appendChild(controls);
-
-    const itemPrice = document.createElement('span');
-    itemPrice.textContent = (item.price * item.quantity).toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    });
-
-    row.appendChild(itemInfo);
-    row.appendChild(itemPrice);
-    cartItems.appendChild(row);
-
-    total += item.price * item.quantity;
-  });
-
- 
-  // UPDATE FLOATING BAG
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   bagCount.textContent = itemCount;
   bagPreview.innerHTML = '';
@@ -881,13 +793,8 @@ function renderCart() {
     style: 'currency',
     currency: 'USD'
   });
-
-
-  cartTotal.textContent = total.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD'
-  });
 }
+
 
 </script>
 
